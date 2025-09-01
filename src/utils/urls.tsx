@@ -11,5 +11,8 @@ baseURL:BASEURL,
 export const EMPLOYEIES_URL={
     REGISTER:`Users/Register`,
     VIRIFY:`Users/verify`,
-    LOGIN:`Users/Login`
+    LOGIN:`Users/Login`,
+    CHANGEPASSWORD:`Users/ChangePassword`
 }
+
+ 

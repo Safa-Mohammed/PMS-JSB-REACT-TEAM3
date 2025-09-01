@@ -1,4 +1,4 @@
-// Header.tsx
+
 type NavbarProps = {
   className?: string;
 };

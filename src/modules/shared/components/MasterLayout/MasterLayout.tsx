@@ -8,7 +8,7 @@ export default function MasterLayout() {
   return (
     <div className="d-flex flex-column vh-100 w-100">
       {/* Header full width */}
-      <Navbar className="bg-success shadow-sm" />
+      <Navbar className="bg-success shadow-sm"/>
 
       {/* Main area: Sidebar + Content */}
       <div className="d-flex flex-grow-1">
