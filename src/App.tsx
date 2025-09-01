@@ -1,6 +1,5 @@
 // src/App.tsx
 
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -26,7 +25,8 @@ import ProjectView from "./modules/dashboard/components/project/projectView/proj
 import ProjectList from "./modules/dashboard/components/project/projectList/projectList";
 import TaskData from "./modules/dashboard/components/tasks/components/taskData/taskData";
 import TaskList from "./modules/dashboard/components/tasks/components/taskList/taskList";
-import Register from "./modules/authentication/components/Register/Register";
+import Register from "./modules/authentication/components/register/register";
+import ProtectedRoute from "./modules/shared/components/protectedRoute/protectedRoute";
 
 function App() {
   const router = createBrowserRouter([
@@ -36,16 +36,19 @@ function App() {
       children: [
         { index: true, element: <Login /> },
         { path: "login", element: <Login /> },
-        { path: "register", element:<Register/> },
+        { path: "register", element: <Register /> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
-        { path: "change-password", element: <ChangePassword /> },
         { path: "verify-account", element: <VerifyAccount /> },
       ],
     },
     {
       path: "/dashboard",
-      element: <MasterLayout />,
+      element: (
+        <ProtectedRoute>
+          <MasterLayout />
+        </ProtectedRoute>
+      ),
       children: [
         { index: true, element: <Dashboard /> },
         { path: "dashboard", element: <Dashboard /> },
@@ -56,6 +59,7 @@ function App() {
         { path: "projects-list", element: <ProjectList /> },
         { path: "tasks-data", element: <TaskData /> },
         { path: "tasks-list", element: <TaskList /> },
+        { path: "change-password", element: <ChangePassword /> },
       ],
     },
     {
