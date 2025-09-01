@@ -6,6 +6,8 @@ type NavbarProps = {
 export default function Header({ className }: NavbarProps) {
   return (
     <header className={`header ${className ?? ""}`}>
-navbar    </header>
+navbar    
+
+</header>
   );
 }

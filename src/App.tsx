@@ -1,9 +1,5 @@
 // src/App.tsx
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
+
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -14,7 +10,6 @@ import MasterLayout from "./modules/shared/components/MasterLayout/MasterLayout"
 
 // Auth Pages
 import Login from "./modules/authentication/components/login/login";
-import Register from "./modules/authentication/components/register/register";
 import ForgetPassword from "./modules/authentication/components/forgetPassword/forgetPassword";
 import ResetPassword from "./modules/authentication/components/resetPassword/resetPassword";
 import ChangePassword from "./modules/authentication/components/changePassword/changePassword";
@@ -31,6 +26,7 @@ import ProjectView from "./modules/dashboard/components/project/projectView/proj
 import ProjectList from "./modules/dashboard/components/project/projectList/projectList";
 import TaskData from "./modules/dashboard/components/tasks/components/taskData/taskData";
 import TaskList from "./modules/dashboard/components/tasks/components/taskList/taskList";
+import Register from "./modules/authentication/components/Register/Register";
 
 function App() {
   const router = createBrowserRouter([
@@ -40,7 +36,7 @@ function App() {
       children: [
         { index: true, element: <Login /> },
         { path: "login", element: <Login /> },
-        { path: "register", element: <Register /> },
+        { path: "register", element:<Register/> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
         { path: "change-password", element: <ChangePassword /> },
