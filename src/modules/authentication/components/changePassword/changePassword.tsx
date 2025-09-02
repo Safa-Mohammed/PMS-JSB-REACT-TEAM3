@@ -29,11 +29,7 @@ export default function ChangePassword() {
 
   const onSubmit = async (data: ChangePasswordForm) => {
    
-
-    if (data.newPassword !== data.confirmNewPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
+ 
 
     try {
       setLoading(true);
