@@ -20,6 +20,7 @@ let navigate=useNavigate()
 
   const [imgPreview, setImgPreview] = useState(null);
   let handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event)
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       if (file) {
