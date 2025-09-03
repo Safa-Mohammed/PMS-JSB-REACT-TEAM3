@@ -17,3 +17,8 @@ export const EMAIL_VALIDATION={
                          message: "UserName must contain letters and end with numbers (no spaces)"
                            }
               }
+
+                              export const PASSWORD_VALIDATION={
+                required:"Password is Required",
+
+              }
