@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { EMAIL_VALIDATION } from "../../../../utils/validation";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";  
 
 export default function login() {
   let {
@@ -60,8 +60,9 @@ export default function login() {
             aria-describedby="basic-addon1"
           />
         </div>
- {errors.email && <span className='text-danger'>{errors.email.message as string}</span>}
-
+        {errors.email && (
+          <span className="text-danger">{errors.email.message as string}</span>
+        )}
 
         <div className="input-group mt-4 rounded-3">
           <div className="input-group-prepend">
@@ -91,8 +92,27 @@ export default function login() {
           </button>
         </div>
         {errors.password && (
-          <span className="text-danger">{errors.password.message as string}</span>
+          <span className="text-danger">
+            {errors.password.message as string}
+          </span>
         )}
+
+        <div className="d-flex justify-content-between mt-2">
+          <small>
+            <Link to="/register" className="text-white text-decoration-none">
+              Register Now ?
+            </Link>
+          </small>
+          <small>
+            <Link
+              to="/forget-password"
+              className="text-white text-decoration-none"
+            >
+              Forget Password ?
+            </Link>
+          </small>
+        </div>
+
         <div className=" text-center">
           <button
             className="btn text-light mt-4 rounded-4 mb-4"
