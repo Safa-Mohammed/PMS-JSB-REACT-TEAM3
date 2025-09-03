@@ -44,30 +44,23 @@ export default function ForgetPassword() {
   return (
     <>
       {/* Title section */}
-      <div className="title">
-        <small className=" text-light">welcome to pms</small>
-        <h4 style={{ color: "rgba(239, 155, 40, 1)" }}>Forget Password</h4>
-      </div>
+          <div className="title">
+  <small className="text-light">Welcome to PMS</small>
+  <h4 className="heading-underline">Forget Password</h4>
+</div>
 
       {/* Form with email input*/}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="input-group mt-4 rounded-3">
-          <div className="input-group-prepend">
-            <span
-              className="input-group-text rounded-end-0 border-0 py-2 "
-              id="basic-addon1"
-            >
-              {/* Email icon */}
-              <i className="fa-solid fa-envelope fs-5 text-secondary py-2 pe-2 border-end border-1 border-secondary"></i>
-            </span>
-          </div>
+        <div className="mt-4"><label>E-mail</label></div>
+        <div className="input-group rounded-3">
+
           <input
             {...register("email", EMAIL_VALIDATION)}
             type="email"
             className={`form-control ${
               errors.email ? "is-invalid" : ""
             } border-0 bg-light shadow-none`}
-            placeholder="email"
+            placeholder="Enter your E-mail"
             aria-label="email"
             aria-describedby="basic-addon1"
           />

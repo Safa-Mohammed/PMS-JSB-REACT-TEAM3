@@ -18,6 +18,7 @@ export default function ChangePassword() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<ChangePasswordForm>();
   const authContext = useContext(AuthContext);
   if (!authContext) throw new Error("AuthContext must be used inside AuthContextProvider");
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -28,9 +29,6 @@ export default function ChangePassword() {
   const newPasswordValue = watch("newPassword", "");
 
   const onSubmit = async (data: ChangePasswordForm) => {
-   
- 
-
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
@@ -45,91 +43,77 @@ export default function ChangePassword() {
       localStorage.removeItem("token");
       navigate("/login");
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to change password");
+      toast.error(error?.response?.data?.message || "Failed to change password");
     } finally {
       setLoading(false);
     }
   };
 
+  const renderPasswordInput = (
+    label: string,
+    name: keyof ChangePasswordForm,
+    show: boolean,
+    toggleShow: () => void,
+    validation?: any
+  ) => (
+    <div className="mb-3 w-100 mt-4">
+      <label htmlFor={name} className="input-label fw-semibold">{label}</label>
+      <div className="input-group mt-2">
+        <input
+          id={name}
+          {...register(name, validation)}
+          type={show ? "text" : "password"}
+          className={`form-control ${errors[name] ? "is-invalid" : ""}`}
+          placeholder={label}
+        />
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={toggleShow}
+          aria-label={show ? "Hide password" : "Show password"}
+        >
+          <i className={`fa-solid ${show ? "fa-eye" : "fa-eye-slash"}`}></i>
+        </button>
+      </div>
+      {errors[name] && (
+        <span className="text-danger">{errors[name]?.message as string}</span>
+      )}
+    </div>
+  );
+
   return (
     <>
       <div className="title">
-        <p>welcome to PMS</p>
-        <h3 className="heading-underline">Change Password</h3>
+        <small className="text-light">Welcome to PMS</small>
+        <h4 className="heading-underline">Change Password</h4>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="pt-5">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {renderPasswordInput("Old Password", "oldPassword", showOldPassword, () => setShowOldPassword(!showOldPassword), PASSWORD_VALIDATION)}
 
-        {/* Old Password */}
-        <div className="mb-3 position-relative">
-          <label>Old Password</label>
-          <input
-            {...register("oldPassword", PASSWORD_VALIDATION)}
-            type={showOldPassword ? "text" : "password"}
-            className="form-control input-with-icon"
-            placeholder="Enter your Old Password"
-          />
-          <span
-            className="eye-icon"
-            onClick={() => setShowOldPassword(!showOldPassword)}
+        {renderPasswordInput("New Password", "newPassword", showNewPassword, () => setShowNewPassword(!showNewPassword), PASSWORD_VALIDATION)}
+
+        {renderPasswordInput(
+          "Confirm New Password",
+          "confirmNewPassword",
+          showConfirmPassword,
+          () => setShowConfirmPassword(!showConfirmPassword),
+          {
+            required: "Confirm password is required",
+            validate: (value: string) => value === newPasswordValue || "Passwords do not match",
+          }
+        )}
+
+        <div className="text-center">
+          <button
+            type="submit"
+            className="btn text-light mt-4 rounded-4 mb-4"
+            style={{ backgroundColor: "rgba(239, 155, 40, 1)", padding: "7px 180px" }}
+            disabled={loading}
           >
-            <i className={showOldPassword ? "fa fa-eye" : "fa fa-eye-slash"}></i>
-          </span>
-          {errors.oldPassword && (
-            <small className="text-danger">{errors.oldPassword.message}</small>
-          )}
+            {loading ? "Changing..." : "Save"}
+          </button>
         </div>
-
-        {/* New Password */}
-        <div className="mb-3 position-relative">
-          <label>New Password</label>
-          <input
-            {...register("newPassword", PASSWORD_VALIDATION)}
-            type={showNewPassword ? "text" : "password"}
-            className="form-control input-with-icon"
-            placeholder="Enter your New Password"
-          />
-          <span
-            className="eye-icon"
-            onClick={() => setShowNewPassword(!showNewPassword)}
-          >
-            <i className={showNewPassword ? "fa fa-eye" : "fa fa-eye-slash"}></i>
-          </span>
-          {errors.newPassword && (
-            <small className="text-danger">{errors.newPassword.message}</small>
-          )}
-        </div>
-
-        {/* Confirm New Password */}
-        <div className="mb-4 position-relative">
-          <label>Confirm New Password</label>
-          <input
-            {...register("confirmNewPassword", {
-              required: "Confirm password is required",
-              validate: (value) => value === newPasswordValue || "Passwords do not match",
-            })}
-            type={showConfirmPassword ? "text" : "password"}
-            className="form-control input-with-icon"
-            placeholder="Confirm New Password"
-          />
-          <span
-            className="eye-icon"
-            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-          >
-            <i className={showConfirmPassword ? "fa fa-eye" : "fa fa-eye-slash"}></i>
-          </span>
-          {errors.confirmNewPassword && (
-            <small className="text-danger">{errors.confirmNewPassword.message}</small>
-          )}
-        </div>
-
-        <button
-          type="submit"
-          className="btn btn-success w-100 rounded-5"
-          disabled={loading}
-        >
-          {loading ? "Changing..." : "Save"}
-        </button>
       </form>
 
       <ToastContainer />

@@ -24,7 +24,7 @@ export default function AuthLayout() {
       {/* ✅ Toast configuration */}
       <ToastContainer
         position="top-right"
-        autoClose={9000} // 3 seconds
+        autoClose={4000}  
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

@@ -2,7 +2,7 @@
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
+import "react-toastify/dist/ReactToastify.css";
 // Layouts
 import AuthLayout from "./modules/shared/components/AuthLayout/AuthLayout";
 import MasterLayout from "./modules/shared/components/MasterLayout/MasterLayout";

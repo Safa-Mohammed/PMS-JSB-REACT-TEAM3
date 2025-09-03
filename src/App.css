@@ -1,6 +1,6 @@
 .auth-layout{
     background-image: url('./assets/images/auth.svg');
-    height: 100vh;
+    height: 106vh;
     background-color: rgba(14, 56, 47, 1);
     display: flex;
     flex-direction: column;
@@ -16,3 +16,77 @@
     background-color: rgba(49, 74, 89, 0.9);
    
 } */
+ .form-control {
+  color: #000 !important;    
+}
+
+
+/* remove border from input and button */
+.form-control,
+.btn-light {
+  border: none !important;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-bottom: #EF9B28;
+}
+
+/* apply one border-bottom to the whole group */
+.input-group {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  border-radius: 0 !important;
+}
+
+/* on focus inside group */
+.input-group:focus-within {
+  border-bottom: 2px solid rgba(239, 155, 40, 1);
+}
+ /* input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #050303 !important;
+} */
+
+.title small {
+  color: #ffffff;
+  margin: 2px 0;
+  display: block; /* makes sure it's above the heading */
+}
+
+/* Styled heading with underline */
+.heading-underline {
+  font-weight: 700;
+  font-size: 32px;
+  color: #EF9B28;
+  display: inline-block;
+  position: relative;
+}
+
+.heading-underline::after {
+  content: "";
+  position: absolute;
+  left: 2%; 
+  bottom: -4px; /* space below text */
+  width: 10px;  /* fixed width for underline */
+  height: 4px; /* thickness of underline */
+  background-color: #EF9B28;
+}
+
+label{
+  color: #EF9B28;
+}
+ .form-control::placeholder {
+  color: white;
+  opacity: 1;  
+}
+/* Hide Edge/Chrome password reveal button */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-clear-button {
+  display: none;
+}

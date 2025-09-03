@@ -46,18 +46,19 @@ export default function ResetPassword() {
   return (
     <>
       {/* Title section */}
-      <div className="title">
-        <small className=" text-light">welcome to pms</small>
-        <h4 style={{ color: "rgba(239, 155, 40, 1)" }}>Reset Password</h4>
-      </div>
+     <div className="title">
+  <small className="text-light">Welcome to PMS</small>
+  <h4 className="heading-underline">Reset Password</h4>
+</div>
+
 
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Email Input */}
-        <div className="input-group mt-4 rounded-3">
-          <span className="input-group-text border-0 py-2">
-            <i className="fa-solid fa-envelope fs-5 text-secondary"></i>
-          </span>
+                <div className="mt-4"><label>E-mail</label></div>
+
+        <div className="input-group  rounded-3">
+          
           <input
             {...register("email", { required: "Email is required" })}
             type="email"
@@ -69,10 +70,10 @@ export default function ResetPassword() {
         {errors.email && <span className="text-danger">{errors.email.message}</span>}
 
         {/* OTP / Seed Input */}
-        <div className="input-group mt-4 rounded-3">
-          <span className="input-group-text border-0 py-2">
-            <i className="fa-solid fa-key fs-5 text-secondary"></i>
-          </span>
+                <div className="mt-4"><label>OTP Verification</label></div>
+
+        <div className="input-group  rounded-3">
+          
           <input
             {...register("seed", { required: "OTP is required" })}
             type="text"
@@ -84,10 +85,10 @@ export default function ResetPassword() {
         {errors.seed && <span className="text-danger">{errors.seed.message}</span>}
 
         {/* New Password Input */}
-        <div className="input-group mt-4 rounded-3">
-          <span className="input-group-text border-0 py-2">
-            <i className="fa-solid fa-lock fs-5 text-secondary"></i>
-          </span>
+                <div className="mt-4"><label>New Password</label></div>
+
+        <div className="input-group  rounded-3">
+         
           <input
             {...register("password", { required: "Password is required" })}
             type="password"
@@ -99,10 +100,10 @@ export default function ResetPassword() {
         {errors.password && <span className="text-danger">{errors.password.message}</span>}
 
         {/* Confirm Password Input */}
-        <div className="input-group mt-4 rounded-3">
-          <span className="input-group-text border-0 py-2">
-            <i className="fa-solid fa-lock fs-5 text-secondary"></i>
-          </span>
+                <div className="mt-4"><label>Confirm Password</label></div>
+
+        <div className="input-group  rounded-3">
+          
           <input
             {...register("confirmPassword", { required: "Confirm password is required" })}
             type="password"
