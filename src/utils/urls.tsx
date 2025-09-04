@@ -15,4 +15,8 @@ export const EMPLOYEIES_URL={
     CHANGEPASSWORD:`Users/ChangePassword`
 }
 
+//PROJECTS URLS
+export const PROJECTS_URL={
+    GETALLPROJECT:`/Project`
+}
  
