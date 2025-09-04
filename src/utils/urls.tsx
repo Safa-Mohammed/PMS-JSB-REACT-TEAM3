@@ -11,12 +11,9 @@ baseURL:BASEURL,
 export const EMPLOYEIES_URL={
     REGISTER:`Users/Register`,
     VIRIFY:`Users/verify`,
-    LOGIN:`Users/Login`,
-    CHANGEPASSWORD:`Users/ChangePassword`
+    LOGIN:`Users/Login`
 }
-
 //PROJECTS URLS
 export const PROJECTS_URL={
     GETALLPROJECT:`/Project`
 }
- 

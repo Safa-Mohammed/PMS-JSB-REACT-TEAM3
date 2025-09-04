@@ -60,6 +60,7 @@ function App() {
         { path: "projects-list", element: <ProjectList /> },
         { path: "tasks-data", element: <TaskData /> },
         { path: "tasks-list", element: <TaskList /> },
+        { path: "change-password", element: <ChangePassword /> },
       ],
     },
     {

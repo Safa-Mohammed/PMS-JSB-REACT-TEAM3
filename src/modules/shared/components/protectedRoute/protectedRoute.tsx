@@ -1,9 +1,19 @@
 import { useContext} from "react";
+<<<<<<< HEAD
 import type {ProtectedRouteProps} from '../../../../utils/interfaces'
 import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../../../../context/AuthContext"; 
 
 
+=======
+import  type {ReactNode } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from "../../../../context/AuthContext"; 
+
+interface ProtectedRouteProps {
+  children?: ReactNode;
+}
+>>>>>>> 039291319b97fc4b7be0529824d760e572ada27f
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const authContext = useContext(AuthContext);
