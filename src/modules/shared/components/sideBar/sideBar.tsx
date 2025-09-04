@@ -18,6 +18,10 @@ export default function Sidebar({ className }: SidebarProps) {
   return (
     <ProSidebar className={className}>
       <Menu>
+        <MenuItem onClick={() => navigate("/dashboard/users-list")}>Users</MenuItem>
+        <MenuItem onClick={() => navigate("/dashboard/projects-list")}>Projects</MenuItem>
+                <MenuItem onClick={() => navigate("/dashboard/tasks-list")}>Tasks</MenuItem>
+
         <MenuItem onClick={() => navigate("/change-password")}>Change Password</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
