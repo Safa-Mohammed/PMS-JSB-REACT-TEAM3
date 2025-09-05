@@ -4,7 +4,11 @@ import { useAuthContext } from "../../../../context/AuthContext";
 import { useState } from "react";
 import styles from './sidebar.module.css';
 
-export default function Sidebar() {
+type SidebarProps = {
+  className?: string;
+};
+
+export default function Sidebar({ className }: SidebarProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useAuthContext();
@@ -22,7 +26,7 @@ export default function Sidebar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className={styles.sidebarContainer}>
+    <div className={`${styles.sidebarContainer} ${className || ""}`}>
       <ProSidebar collapsed={isCollapsed}>
         <Menu>
           <div className={styles.iconSidebar} onClick={ToggleCollapse}>
