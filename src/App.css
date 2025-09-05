@@ -91,4 +91,32 @@ input[type="password"]::-webkit-clear-button {
   display: none;
 }
 
- 
+ /* .sidebar-container .ps-sidebar-container{
+  background-color: #0E382F !important;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  height: 100vh;
+ }
+.sidebar-container .ps-menu-button:hover  {
+  background-color: #EF9B284D !important;
+  width: 90%;
+  margin: auto;
+  border-radius: 20px;
+ }
+.sidebar-container .ps-menu-button.ps-active {
+  background-color: #d08010e1 !important;  
+  color: #fff !important;
+  font-weight: 700;
+  width: 90%;
+  margin: auto;
+  border-radius: 20px;
+}
+.icon-sidebar {
+  background: #EF9B28;
+  border-radius: 10px 0px 0px 10px; 
+  padding: 6px;  
+  display: inline-flex; 
+  align-items: center;
+  justify-content: center;
+} */
