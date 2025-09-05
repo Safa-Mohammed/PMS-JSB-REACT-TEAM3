@@ -1,46 +1,41 @@
-/* Use :global() to style react-pro-sidebar classes because CSS modules 
-scope class names locally; without it, hover/active styles on the library’s sidebar won’t work.
- */
-.sidebarContainer {
-  height: 120vh !important;
+.sidebar {
+  background-color: #083832 !important; /* dark green background */
+  height: 100vh;
+  border-right: none;
 }
 
-/* Target ProSidebar internal classes globally */
-:global(.ps-sidebar-container) {
-  background-color: #0E382F !important;
-  color: white;
-  font-weight: 500;
+/* Menu items */
+.menuItem {
+  color: #ffffff;
   font-size: 14px;
-  height: 100vh !important;
-  position: fixed;
-}
-
-:global(.ps-menu-button:hover) {
-  background-color: #EF9B284D !important;
-  width: 90%;
-  margin: auto;
-  border-radius: 20px;
-}
-
-:global(.ps-menu-button.ps-active) {
-  background-color: #d08010e1 !important;  
-  color: #fff !important;
-  font-weight: 700;
-  width: 90%;
-  margin: auto;
-  border-radius: 20px;
-}
-
-/* Move toggle icon to the right side */
-.iconSidebar {
-  background: #EF9B28;
-  border-radius: 10px  0px  0px 10px; /* round corners on right */
-  padding: 10px;
-  width: 30%;
-  margin: 10px 0 10px auto; /* auto left margin pushes it to the right */
+  padding: 12px 20px;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
 }
 
+/* Hover effect */
+.menuItem:hover {
+  background-color: rgba(255, 166, 0, 0.2);
+  color: #f2a900;
+  border-radius: 8px;
+}
+
+/* Active item */
+.active {
+  background-color: rgba(255, 166, 0, 0.2);
+  color: #f2a900;
+  border-radius: 8px;
+}
+
+/* Stick last items at bottom */
+.menu {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.bottomItem {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
