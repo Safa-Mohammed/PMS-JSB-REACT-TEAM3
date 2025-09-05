@@ -1,6 +1,6 @@
  
 export default function projectList() {
   return (
-    <div>projectList</div>
+    <div>projectLists</div>
   )
 }
