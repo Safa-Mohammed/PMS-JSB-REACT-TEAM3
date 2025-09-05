@@ -3,12 +3,14 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Sidebar from "../../../shared/components/sideBar/sideBar";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function MasterLayout() {
   return (
     <div className="d-flex flex-column vh-100 w-100">
       {/* Header full width */}
-      <Navbar className="bg-success shadow-sm"/>
+      <Navbar className="bg-success shadow-sm" />
 
       {/* Main area: Sidebar + Content */}
       <div className="d-flex flex-grow-1">
@@ -20,6 +22,7 @@ export default function MasterLayout() {
           <Outlet />
         </main>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
