@@ -1,0 +1,23 @@
+.addButton{
+    background-color: #EF9B28;
+    padding: 12px 10px;
+    border: none;
+    color: white;
+    border-radius: 15px;
+}
+.tittle{
+    font-size: 28px;
+    font-weight: 500;
+    color: #4F4F4F;
+     padding-top: 10px;
+   }
+
+   .content{
+background-color: #f5f5f5;
+   }
+   
+   
+   .headTable {
+  background-color: #315951E5 !important;  
+  color: white !important; 
+}

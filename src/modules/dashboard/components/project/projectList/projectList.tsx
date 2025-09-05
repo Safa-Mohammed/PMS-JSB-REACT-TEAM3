@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { axiosinstant, PROJECTS_URL } from "../../../../../utils/urls";
 import Table from "react-bootstrap/Table";
- import Modal from "react-bootstrap/Modal";
- import Form from "react-bootstrap/Form";
+import styles from "./projectList.module.css";
 import { toast } from "react-toastify";
 import NoData from "../../../../shared/components/noData/noData";
+import { useHref, useNavigate } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import DeletePage from "../../../../shared/components/DeleteConfirmation/deleteConfrimation";  
 
 interface Project {
   id: number;
@@ -20,18 +23,13 @@ interface ProjectsResponse {
   data: any;
 }
 
-interface CreateProjectRequest {
-  title: string;
-  description: string;
-}
-
 export default function ProjectList() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const createHref = useHref(`/dashboard/projects-data`);
 
-  // Form fields for new project
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const getAllProjects = async () => {
     try {
@@ -43,7 +41,6 @@ export default function ProjectList() {
           params: { title: "", pageSize: 10, pageNumber: 1 },
         }
       );
-      console.log("API response:", response.data);
       setProjects(response.data.data || []);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -55,54 +52,23 @@ export default function ProjectList() {
     getAllProjects();
   }, []);
 
-  //create new project
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+  // delete project
+  const handleDelete = async () => {
+    if (!selectedProject) return;
 
-  const handleCreate = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const newProject: CreateProjectRequest = {
-        title,
-        description,
-      };
-
-      const res = await axiosinstant.post(
-        PROJECTS_URL.CREATEPROJECT,
-        newProject,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      getAllProjects();
-      handleClose();
-
-      toast.success(res.data?.message || "Project created successfully!");
-    } catch (error: any) {
-      console.error("Error creating project:", error);
-
-      const msg =
-        error.response?.data?.message ||
-        "Failed to create project. Please try again.";
-      toast.error(msg);
-    }
-  };
-
-  //delete project
-  const handleDelete = async (id: number) => {
     try {
       const token = localStorage.getItem("token");
 
-      // طلب حذف المشروع
       const res = await axiosinstant.delete(
-        PROJECTS_URL.DELETEPROJECT.replace("{id}", id.toString()),
+        PROJECTS_URL.DELETEPROJECT.replace("{id}", selectedProject.id.toString()),
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
 
       getAllProjects();
+      setShowDeleteModal(false);
+      setSelectedProject(null);
 
       toast.success(res.data?.message || "Project deleted successfully!");
     } catch (error: any) {
@@ -117,27 +83,25 @@ export default function ProjectList() {
 
   return (
     <>
-      <div className="title d-flex justify-content-between p-2 align-items-center">
-        <div className="description p-2">
-          <h4 className="m-0 fs-5">Projects</h4>
+      <div className="d-flex justify-content-between bg-primary p-4 shadow-sm bg-transparent">
+        <div>
+          <h4 className={styles.tittle}>Projects</h4>
         </div>
-        <button
-          className="btn btn-success me-2 rounded-5 px-4 py-2"
-          onClick={handleShow}
-        >
+
+        <button className={styles.addButton} onClick={() => navigate(createHref)}>
           Add New Project
         </button>
       </div>
 
-      <div>
+      <div className={`p-4 vh-100 ${styles.content}`}>
         <Table striped bordered hover responsive>
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Date Created</th>
-              <th>Last Modified</th>
-              <th>Actions</th>
+              <th className={styles.headTable}>Title</th>
+              <th className={styles.headTable}>Description</th>
+              <th className={styles.headTable}>Date Created</th>
+              <th className={styles.headTable}>Last Modified</th>
+              <th className={styles.headTable}>Actions</th>
             </tr>
           </thead>
 
@@ -158,18 +122,33 @@ export default function ProjectList() {
                     {new Date(project.modificationDate).toLocaleDateString()}
                   </td>
                   <td>
-                    <button className="btn btn-sm">
+                    <button
+                      className="btn btn-sm"
+                      onClick={() =>
+                        navigate(`/dashboard/projects-data/edit/${project.id}`)
+                      }
+                    >
                       <i className="fas fa-edit"></i>
                     </button>
+
                     <button
-                      className="btn btn-sm btn-danger ms-1"
-                      onClick={() => handleDelete(project.id)}
+                      className="btn btn-sm ms-1"
+                      onClick={() =>
+                        navigate(`/dashboard/projects-data/view/${project.id}`)
+                      }
                     >
-                      <i className="fas fa-trash"></i>
+                      <i className="fas fa-eye"></i>
                     </button>
 
-                    <button className="btn btn-sm ">
-                      <i className="fas fa-eye"></i>
+                    {/* Delete with modal confirm */}
+                    <button
+                      className="btn btn-sm ms-1"
+                      onClick={() => {
+                        setSelectedProject(project);
+                        setShowDeleteModal(true);
+                      }}
+                    >
+                      <i className="fas fa-trash"></i>
                     </button>
                   </td>
                 </tr>
@@ -177,48 +156,35 @@ export default function ProjectList() {
             )}
           </tbody>
         </Table>
-       <Modal  >
-  <Modal.Header  >
-    <Modal.Title  >Create New Project</Modal.Title>
+      </div>
+
+      {/* Delete Confirmation Modal */}
+{/* Delete Confirmation Modal */}
+<Modal
+  show={showDeleteModal}
+  onHide={() => setShowDeleteModal(false)}
+  centered
+>
+  <Modal.Header closeButton>
+    <Modal.Title>Confirm Delete</Modal.Title>
   </Modal.Header>
 
   <Modal.Body>
-    <Form>
-      <Form.Group  >
-        <Form.Label  >Title</Form.Label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter project title"
-          
-        />
-      </Form.Group>
-
-      <Form.Group >
-        <Form.Label  >Description</Form.Label>
-        <textarea
-          rows={3}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Enter project description"
-           
-        />
-      </Form.Group>
-    </Form>
+    {selectedProject && (
+      <DeletePage deleteItem={selectedProject.title} />
+    )}
   </Modal.Body>
 
   <Modal.Footer>
-    <button onClick={handleClose}  >
-      Close
-    </button>
-    <button onClick={handleCreate}  >
-      Save Project
-    </button>
+    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+      Cancel
+    </Button>
+    <Button variant="danger" onClick={handleDelete}>
+      Delete
+    </Button>
   </Modal.Footer>
 </Modal>
 
-      </div>
     </>
   );
 }

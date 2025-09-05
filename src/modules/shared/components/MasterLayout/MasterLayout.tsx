@@ -15,10 +15,10 @@ export default function MasterLayout() {
       {/* Main area: Sidebar + Content */}
       <div className="d-flex flex-grow-1">
         {/* Sidebar on left */}
-        <Sidebar className="bg-light border-end" />
+        <Sidebar className="bg-light border-end fixed-bottom" />
 
         {/* Page content on right */}
-        <main className="flex-grow-1 p-3 bg-light-subtle">
+        <main className="flex-grow-1  bg-light-subtle">
           <Outlet />
         </main>
       </div>
