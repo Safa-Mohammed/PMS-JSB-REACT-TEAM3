@@ -26,7 +26,7 @@ export default function Sidebar({ className }: SidebarProps) {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className={`${styles.sidebarContainer} ${className || ""}`}>
+    <div className={`${styles.sidebarContainer} ${className}`}>
       <ProSidebar collapsed={isCollapsed}>
         <Menu>
           <div className={styles.iconSidebar} onClick={ToggleCollapse}>

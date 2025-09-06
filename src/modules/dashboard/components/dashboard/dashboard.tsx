@@ -3,7 +3,8 @@ import styles from "./dashboard.module.css";
 export default function Dashboard() {
   return (
     <>
-      <div className={styles.heroSection}>
+      <div className="p-4">
+        <div className={styles.heroSection}>
         <div className={styles.textContainer}>
           <h2 className={styles.title}>
             <span className={styles.first}>Welcome</span>{" "}
@@ -13,6 +14,7 @@ export default function Dashboard() {
             You can add project and assign tasks to your team
           </h3>
         </div>
+      </div>
       </div>
       <div className="container mt-4">
         <div className="row g-4">

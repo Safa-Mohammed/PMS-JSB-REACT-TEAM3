@@ -2,7 +2,7 @@
 scope class names locally; without it, hover/active styles on the library’s sidebar won’t work.
  */
 .sidebarContainer {
-  height: 120vh !important;
+  height: 130vh !important;
 }
 
 /* Target ProSidebar internal classes globally */
@@ -11,7 +11,7 @@ scope class names locally; without it, hover/active styles on the library’s si
   color: white;
   font-weight: 500;
   font-size: 14px;
-  height: 100vh !important;
+  height: 130vh !important;
   position: fixed;
 }
 

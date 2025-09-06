@@ -2,12 +2,12 @@ import axios from "axios";
 
 export const BASEURL = `https://upskilling-egypt.com:3003/api/v1/`;
 
- export const HEADERS = {
+export const HEADERS = {
   Authorization: localStorage.getItem("token"),
-  "Content-Type": "application/json",  
+  "Content-Type": "application/json",
 };
 
-//  axiosinstant  
+//  axiosinstant
 export let axiosinstant = axios.create({
   baseURL: BASEURL,
   headers: HEADERS,
@@ -26,4 +26,6 @@ export const PROJECTS_URL = {
   GETALLPROJECT: `/Project`,
   CREATEPROJECT: `/Project`,
   DELETEPROJECT: `/Project/{id}`,
+  UPDATEPROJECT: `/Project/{id}`,
+  VIEWPROJECT: `/Project/{id}`,
 };

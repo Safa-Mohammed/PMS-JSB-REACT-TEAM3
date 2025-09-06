@@ -8,21 +8,9 @@ import { useHref, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import DeletePage from "../../../../shared/components/DeleteConfirmation/deleteConfrimation";
+import type { Project ,ProjectsResponse } from "../../../../../utils/interfaces";
 
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  creationDate: string;
-  modificationDate: string;
-}
 
-interface ProjectsResponse {
-  projects: Project[];
-  totalCount: number;
-  data: any;
-  totalNumberOfRecords: number;
-}
 
 export default function ProjectList() {
   const navigate = useNavigate();
@@ -38,11 +26,9 @@ export default function ProjectList() {
 
   const getAllProjects = async (pageNumber: number, pageSize: number ,title:string) => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axiosinstant.get<ProjectsResponse>(
         PROJECTS_URL.GETALLPROJECT,
         {
-          headers: { Authorization: `Bearer ${token}` },
           params: { title, pageSize, pageNumber },
         }
       );
@@ -97,16 +83,12 @@ const getNameValue = (input: React.ChangeEvent<HTMLInputElement>) => {
     if (!selectedProject) return;
 
     try {
-      const token = localStorage.getItem("token");
-
       const res = await axiosinstant.delete(
         PROJECTS_URL.DELETEPROJECT.replace(
           "{id}",
           selectedProject.id.toString()
         ),
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+
       );
 
       getAllProjects(3, 10, nameValue);

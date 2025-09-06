@@ -4,16 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { axiosinstant, PROJECTS_URL } from "../../../../../utils/urls";
 import styles from './projectData.module.css';
-
-interface ProjectForm {
-  title: string;
-  description: string;
-}
-
-interface ProjectResponse {
-  title: string;
-  description: string;
-}
+import type { ProjectForm ,ProjectResponse } from "../../../../../utils/interfaces";
 
 export default function ProjectData() {
   const { id } = useParams<{ id?: string }>();
@@ -36,10 +27,8 @@ export default function ProjectData() {
       const fetchProject = async () => {
         try {
           setFetching(true);
-          const token = localStorage.getItem("token");
           const res = await axiosinstant.get<ProjectResponse>(
             PROJECTS_URL.VIEWPROJECT.replace("{id}", id),
-            { headers: { Authorization: `Bearer ${token}` } }
           );
           setValue("title", res.data?.title || "");
           setValue("description", res.data?.description || "");
@@ -61,18 +50,15 @@ export default function ProjectData() {
   const onSubmit = async (data: ProjectForm) => {
     try {
       setSaving(true);
-      const token = localStorage.getItem("token");
 
       if (mode === "create") {
-        await axiosinstant.post(PROJECTS_URL.CREATEPROJECT, data, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await axiosinstant.post(PROJECTS_URL.CREATEPROJECT, data, );
         toast.success("Project created successfully!");
       } else if (mode === "edit" && id) {
         await axiosinstant.put(
           PROJECTS_URL.UPDATEPROJECT.replace("{id}", id),
           data,
-          { headers: { Authorization: `Bearer ${token}` } }
+          
         );
         toast.success("Project updated successfully!");
       }

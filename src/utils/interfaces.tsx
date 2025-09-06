@@ -43,3 +43,28 @@ export interface AuthContextType {
 export interface AuthContextProviderProps {
   children: ReactNode;
 }
+
+//project page 
+export interface Project {
+  id: number;
+  title: string;
+  description: string;
+  creationDate: string;
+  modificationDate: string;
+}
+
+export interface ProjectsResponse {
+  projects: Project[];
+  totalCount: number;
+  data: any;
+  totalNumberOfRecords: number;
+}
+export interface ProjectForm {
+  title: string;
+  description: string;
+}
+
+export interface ProjectResponse {
+  title: string;
+  description: string;
+}

@@ -55,7 +55,7 @@ function App() {
         { path: "dashboard", element: <Dashboard /> },
         { path: "users-list", element: <UsersList /> },
         { path: "user-view", element: <UsersView /> },
-            { path: "projects-data", element: <ProjectData /> },
+        { path: "projects-data", element: <ProjectData /> },
         { path: "projects-data/:id", element: <ProjectData /> },
         { path: "/dashboard/projects-data/view/:id", element: <ProjectData /> },
         { path: "/dashboard/projects-data/edit/:id", element: <ProjectData /> },
