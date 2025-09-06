@@ -18,7 +18,7 @@ export default function MasterLayout() {
         <Sidebar className="bg-light border-end" />
 
         {/* Page content on right */}
-        <main className="flex-grow-1 p-3 bg-light-subtle">
+        <main className="flex-grow-1  bg-light-subtle">
           <Outlet />
         </main>
       </div>
