@@ -31,12 +31,10 @@ export default function ChangePassword() {
   const onSubmit = async (data: ChangePasswordForm) => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
 
       await axiosinstant.put(
         EMPLOYEIES_URL.CHANGEPASSWORD,
         data,
-        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       toast.success("Password changed successfully! Please log in again.");
