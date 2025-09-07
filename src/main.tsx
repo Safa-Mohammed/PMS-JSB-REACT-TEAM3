@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 import AuthContextProvider from './context/AuthContext.tsx';
 
 createRoot(document.getElementById('root')!).render(

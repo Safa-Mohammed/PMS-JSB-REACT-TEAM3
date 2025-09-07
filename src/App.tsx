@@ -25,7 +25,7 @@ import ProjectView from "./modules/dashboard/components/project/projectView/proj
 import ProjectList from "./modules/dashboard/components/project/projectList/projectList";
 import TaskData from "./modules/dashboard/components/tasks/components/taskData/taskData";
 import TaskList from "./modules/dashboard/components/tasks/components/taskList/taskList";
-import Register from "./modules/authentication/components/register/register";
+import Register from "./modules/authentication/components/Register/register";
 import ProtectedRoute from "./modules/shared/components/protectedRoute/protectedRoute";
 
 function App() {
@@ -61,8 +61,12 @@ function App() {
         { path: "/dashboard/projects-data/edit/:id", element: <ProjectData /> },
         { path: "projects-view", element: <ProjectView /> },
         { path: "projects-list", element: <ProjectList /> },
-        { path: "tasks-data", element: <TaskData /> },
+        { path: "newTask", element: <TaskData /> },
+       { path: "ViewTask/:id", element: <TaskData /> },
+        { path: "EditTask/:id", element: <TaskData /> },
+
         { path: "tasks-list", element: <TaskList /> },
+        
       ],
     },
     {
