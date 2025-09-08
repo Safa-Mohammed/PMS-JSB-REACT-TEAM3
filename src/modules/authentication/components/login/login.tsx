@@ -142,11 +142,11 @@ export default function login() {
 
         <div className=" text-center">
           <button
-            className="btn text-light mt-4 rounded-4 mb-4"
+            className="btn text-light mt-4 rounded-4 mb-4 w-100"
             disabled={isSubmitting}
             style={{
               backgroundColor: "rgba(239, 155, 40, 1)",
-              padding: "7px 180px",
+              // padding: "7px 180px",
             }}
           >
             {isSubmitting ? "isSubmitting............" : "Login"}

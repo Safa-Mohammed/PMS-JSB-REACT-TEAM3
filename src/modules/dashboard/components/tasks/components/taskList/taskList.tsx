@@ -289,7 +289,7 @@ export default function TaskList() {
         </Modal.Body>
         <Modal.Footer>
           <Button className="btn btn-danger text-light" onClick={deleateTask}>
-           Deleate
+           Delete
           </Button>
           <Button className="btn btn-secondary text-light" onClick={handleClose}>
            cancle

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { axiosinstant, PROJECTS_URL, } from "../../../../../utils/urls";
+import { axiosinstant, PROJECTS_URL } from "../../../../../utils/urls";
 import Table from "react-bootstrap/Table";
 import styles from "./projectList.module.css";
 import { toast } from "react-toastify";
@@ -8,121 +8,87 @@ import { useHref, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import DeletePage from "../../../../shared/components/DeleteConfirmation/deleteConfrimation";
-import type { Project ,ProjectsResponse } from "../../../../../utils/interfaces";
-
-
+import load from "../../../../../assets/images/loadpi.gif"; // Loading gif
+import type { Project, ProjectsResponse } from "../../../../../utils/interfaces";
 
 export default function ProjectList() {
   const navigate = useNavigate();
   const createHref = useHref(`/dashboard/projects-data`);
 
   const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [nameValue, setNameValue] = useState("");
-  const [noOfPages, setnoOfPages] = useState<number[]>([]);
+  const [TotalNumOfPages, setTotalNumOfPages] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 12;
 
-  const getAllProjects = async (pageNumber: number, pageSize: number ,title:string) => {
+  const getAllProjects = async (pageNumber: number, pageSize: number, title: string) => {
     try {
+      setLoading(true);
       const response = await axiosinstant.get<ProjectsResponse>(
         PROJECTS_URL.GETALLPROJECT,
-        {
-          params: { title, pageSize, pageNumber },
-        }
+        { params: { title, pageSize, pageNumber } }
       );
+
       setProjects(response.data.data || []);
-      setnoOfPages(
-        Array(response.data.totalNumberOfRecords)
-          .fill(0)
-          .map((_, i) => i + 1)
-      );
+      const totalPages = Math.ceil(response.data.totalNumberOfRecords / pageSize) || 1;
+      setTotalNumOfPages(Array.from({ length: totalPages }, (_, i) => i + 1));
+      setCurrentPage(pageNumber);
     } catch (error: any) {
- 
-      const msg =
-        error.response?.data?.message ||
-        "Failed to Fetching project. Please try again.";
-      toast.error(msg);
-    }}
-  useEffect(() => {
-    getAllProjects(currentPage, pageSize,nameValue);
-  }, [currentPage]);
-
-
-const getNameValue = (input: React.ChangeEvent<HTMLInputElement>) => {
-  const value = input.target.value;
-  setNameValue(value);
-
-  // Reset to first page when searching
-  setCurrentPage(1);
-
-  // Fetch with correct page & size
-  getAllProjects(1, pageSize, value);
-};
-
-
-  const getVisiblePages = (current: number, total: number, maxVisible = 10) => {
-    const pages = [];
-    let start = Math.max(current - Math.floor(maxVisible / 2), 1);
-    let end = start + maxVisible - 1;
-
-    if (end > total) {
-      end = total;
-      start = Math.max(end - maxVisible + 1, 1);
+      toast.error(error.response?.data?.message || "Failed to fetch projects");
+    } finally {
+      setLoading(false);
     }
-
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-    return pages;
   };
 
-  // delete project
+  useEffect(() => {
+    getAllProjects(currentPage, pageSize, nameValue);
+  }, [currentPage]);
+
+  const getNameValue = (input: React.ChangeEvent<HTMLInputElement>) => {
+    const value = input.target.value;
+    setNameValue(value);
+    setCurrentPage(1);
+    getAllProjects(1, pageSize, value);
+  };
+
   const handleDelete = async () => {
     if (!selectedProject) return;
-
     try {
+      setLoading(true);
       const res = await axiosinstant.delete<ProjectsResponse>(
-        PROJECTS_URL.DELETEPROJECT.replace(
-          "{id}",
-          selectedProject.id.toString()
-        ),
-
+        PROJECTS_URL.DELETEPROJECT.replace("{id}", selectedProject.id.toString())
       );
-
-      getAllProjects(3, 10, nameValue);
+      getAllProjects(currentPage, pageSize, nameValue);
       setShowDeleteModal(false);
       setSelectedProject(null);
-
       toast.success(res.data?.message || "Project deleted successfully!");
     } catch (error: any) {
-      console.error("Error deleting project:", error);
-
-      const msg =
-        error.response?.data?.message ||
-        "Failed to delete project. Please try again.";
-      toast.error(msg);
+      toast.error(error.response?.data?.message || "Failed to delete project");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <div className="d-flex justify-content-between bg-primary p-4 shadow-sm bg-transparent ">
-        <div>
-          <h4 className={styles.tittle}>Projects</h4>
-        </div>
-
-        <button
-          className={styles.addButton}
-          onClick={() => navigate(createHref)}
-        >
+      <div className="d-flex justify-content-between bg-primary p-4 shadow-sm bg-transparent">
+        <h4 className={styles.tittle}>Projects</h4>
+        <button className={styles.addButton} onClick={() => navigate(createHref)}>
           Add New Project
         </button>
       </div>
 
       <div className={`p-4 vh-100 w-100 ${styles.content}`}>
-        <input type="text" placeholder="Search by name"  className="shadow-lg border-0 p-2 px-5 my-3 w-50 rounded-5" onChange={getNameValue}/>
+        <input
+          type="text"
+          placeholder="Search by name"
+          className="shadow-lg border-0 p-2 px-5 my-3 w-50 rounded-5"
+          onChange={getNameValue}
+        />
+
         <Table striped bordered hover responsive>
           <thead>
             <tr>
@@ -135,116 +101,138 @@ const getNameValue = (input: React.ChangeEvent<HTMLInputElement>) => {
           </thead>
 
           <tbody>
-            {projects.length === 0 ? (
+            {loading && (
+              <tr>
+                <td colSpan={5} className="text-center">
+                  <img src={load} alt="loading..." />
+                </td>
+              </tr>
+            )}
+
+            {!loading && projects.length === 0 && (
               <tr>
                 <td colSpan={5} className="text-center text-muted py-4">
                   <NoData />
                 </td>
               </tr>
-            ) : (
+            )}
+
+            {!loading &&
               projects.map((project) => (
                 <tr key={project.id}>
                   <td>{project.title}</td>
                   <td>{project.description}</td>
                   <td>{new Date(project.creationDate).toLocaleDateString()}</td>
+                  <td>{new Date(project.modificationDate).toLocaleDateString()}</td>
                   <td>
-                    {new Date(project.modificationDate).toLocaleDateString()}
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-sm"
-                      onClick={() =>
-                        navigate(`/dashboard/projects-data/edit/${project.id}`)
-                      }
-                    >
-                      <i className="fas fa-edit"></i>
-                    </button>
-
-                    <button
-                      className="btn btn-sm ms-1"
-                      onClick={() =>
-                        navigate(`/dashboard/projects-data/view/${project.id}`)
-                      }
-                    >
-                      <i className="fas fa-eye"></i>
-                    </button>
-
-                    {/* Delete with modal confirm */}
-                    <button
-                      className="btn btn-sm ms-1"
-                      onClick={() => {
-                        setSelectedProject(project);
-                        setShowDeleteModal(true);
-                      }}
-                    >
-                      <i className="fas fa-trash"></i>
-                    </button>
+                    <div className={styles.actionDropdown}>
+                      <button
+                        className={styles.actionButton}
+                        type="button"
+                        id={`dropdownMenu-${project.id}`}
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i className="bi bi-three-dots"></i>
+                      </button>
+                      <ul className={`dropdown-menu ${styles.dropdownMenu}`} aria-labelledby={`dropdownMenu-${project.id}`}>
+                        <li>
+                          <button
+                            className="dropdown-item"
+                            onClick={() => navigate(`/dashboard/projects-data/view/${project.id}`)}
+                          >
+                            View
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className="dropdown-item"
+                            onClick={() => navigate(`/dashboard/projects-data/edit/${project.id}`)}
+                          >
+                            Edit
+                          </button>
+                        </li>
+                        <li>
+                          <button
+                            className="dropdown-item text-danger"
+                            onClick={() => {
+                              setSelectedProject(project);
+                              setShowDeleteModal(true);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </td>
                 </tr>
-              ))
-            )}
+              ))}
           </tbody>
         </Table>
-        <nav aria-label="Page navigation example">
-          <ul className="pagination d-flex w-100 justify-content-center p-1">
-            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-              <button
-                className="page-link"
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              >
-                &laquo;
-              </button>
+
+        {/* Pagination like UsersList */}
+        <nav aria-label="Page navigation">
+          <ul className="pagination justify-content-center">
+            {/* Previous */}
+            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`} onClick={() => currentPage > 1 && getAllProjects(currentPage - 1, pageSize, nameValue)}>
+              <span className="page-link">&laquo;</span>
             </li>
 
-            {getVisiblePages(currentPage, noOfPages.length).map((pageNo) => (
+            {/* First page */}
+            <li className={`page-item ${currentPage === 1 ? "active" : ""}`} onClick={() => getAllProjects(1, pageSize, nameValue)} style={{ cursor: "pointer" }}>
+              <span className="page-link">1</span>
+            </li>
+
+            {/* Ellipsis before current set */}
+            {currentPage > 3 && (
+              <li className="page-item disabled">
+                <span className="page-link">…</span>
+              </li>
+            )}
+
+            {/* Pages around current page */}
+            {TotalNumOfPages.filter(page => page !== 1 && page !== TotalNumOfPages.length && page >= currentPage && page <= currentPage + 2).map(page => (
               <li
-                key={pageNo}
-                className={`page-item ${
-                  currentPage === pageNo ? "active" : ""
-                }`}
+                key={page}
+                className={`page-item ${currentPage === page ? "active" : ""}`}
+                onClick={() => getAllProjects(page, pageSize, nameValue)}
+                style={{ cursor: "pointer" }}
               >
-                <button
-                  className="page-link"
-                  onClick={() => setCurrentPage(pageNo)}
-                >
-                  {pageNo}
-                </button>
+                <span className="page-link">{page}</span>
               </li>
             ))}
 
-            <li
-              className={`page-item ${
-                currentPage === noOfPages.length ? "disabled" : ""
-              }`}
-            >
-              <button
-                className="page-link"
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, noOfPages.length))
-                }
-              >
-                &raquo;
-              </button>
+            {/* Ellipsis after current set */}
+            {currentPage + 2 < TotalNumOfPages.length && (
+              <li className="page-item disabled">
+                <span className="page-link">…</span>
+              </li>
+            )}
+
+            {/* Last page */}
+            {TotalNumOfPages.length > 1 && (
+              <li className={`page-item ${currentPage === TotalNumOfPages.length ? "active" : ""}`} onClick={() => getAllProjects(TotalNumOfPages.length, pageSize, nameValue)} style={{ cursor: "pointer" }}>
+                <span className="page-link">{TotalNumOfPages.length}</span>
+              </li>
+            )}
+
+            {/* Next */}
+            <li className={`page-item ${currentPage === TotalNumOfPages.length ? "disabled" : ""}`} onClick={() => currentPage < TotalNumOfPages.length && getAllProjects(currentPage + 1, pageSize, nameValue)}>
+              <span className="page-link">&raquo;</span>
             </li>
           </ul>
         </nav>
       </div>
 
-      {/* Delete Confirmation Modal */}
-      {/* Delete Confirmation Modal */}
-      <Modal
-        show={showDeleteModal}
-        onHide={() => setShowDeleteModal(false)}
-        centered
-      >
+      {/* Delete Modal */}
+      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Delete</Modal.Title>
         </Modal.Header>
-
         <Modal.Body>
           {selectedProject && <DeletePage deleteItem={selectedProject.title} />}
         </Modal.Body>
-
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
             Cancel
