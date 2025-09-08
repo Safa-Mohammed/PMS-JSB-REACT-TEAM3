@@ -58,6 +58,7 @@ export interface ProjectsResponse {
   totalCount: number;
   data: any;
   totalNumberOfRecords: number;
+  message?: string;
 }
 export interface ProjectForm {
   title: string;
@@ -67,6 +68,7 @@ export interface ProjectForm {
 export interface ProjectResponse {
   title: string;
   description: string;
+    message?: string;
 }
  export interface Employee {
   country:string,
@@ -151,7 +153,8 @@ export interface UserResponse{
    pageNumber:number;
 pageSize:number;
 totalNumberOfRecords: number;
-totalNumberOfPages:number
+totalNumberOfPages:number;
+message?: string;
 }
 export interface EmployyRes{
     pageNumber:number;

@@ -25,7 +25,7 @@ import ProjectView from "./modules/dashboard/components/project/projectView/proj
 import ProjectList from "./modules/dashboard/components/project/projectList/projectList";
 import TaskData from "./modules/dashboard/components/tasks/components/taskData/taskData";
 import TaskList from "./modules/dashboard/components/tasks/components/taskList/taskList";
-import Register from "./modules/authentication/components/Register/register";
+import Register from "./modules/authentication/components/register/register";
 import ProtectedRoute from "./modules/shared/components/protectedRoute/protectedRoute";
 
 function App() {
@@ -54,7 +54,9 @@ function App() {
         { index: true, element: <Dashboard /> },
         { path: "dashboard", element: <Dashboard /> },
         { path: "users-list", element: <UsersList /> },
+        { path: "user-view/:id", element: <UsersView /> },
         { path: "user-view", element: <UsersView /> },
+
         { path: "projects-data", element: <ProjectData /> },
         { path: "projects-data/:id", element: <ProjectData /> },
         { path: "/dashboard/projects-data/view/:id", element: <ProjectData /> },
@@ -62,11 +64,10 @@ function App() {
         { path: "projects-view", element: <ProjectView /> },
         { path: "projects-list", element: <ProjectList /> },
         { path: "newTask", element: <TaskData /> },
-       { path: "ViewTask/:id", element: <TaskData /> },
+        { path: "ViewTask/:id", element: <TaskData /> },
         { path: "EditTask/:id", element: <TaskData /> },
 
         { path: "tasks-list", element: <TaskList /> },
-        
       ],
     },
     {

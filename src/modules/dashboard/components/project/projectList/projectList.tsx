@@ -83,7 +83,7 @@ const getNameValue = (input: React.ChangeEvent<HTMLInputElement>) => {
     if (!selectedProject) return;
 
     try {
-      const res = await axiosinstant.delete(
+      const res = await axiosinstant.delete<ProjectsResponse>(
         PROJECTS_URL.DELETEPROJECT.replace(
           "{id}",
           selectedProject.id.toString()

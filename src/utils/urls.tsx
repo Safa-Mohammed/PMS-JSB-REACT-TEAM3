@@ -20,6 +20,7 @@ export const EMPLOYEIES_URL = {
   LOGIN: `Users/Login`,
   CHANGEPASSWORD: `Users/ChangePassword`,
     GETALLUSERS:`Users/`,
+     BLOCKORUNBLOCKUSERS:`Users/`,
     USERS_COUNT:`Users/count`
 
 };
