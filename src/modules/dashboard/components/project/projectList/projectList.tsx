@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { axiosinstant, PROJECTS_URL } from "../../../../../utils/urls";
+import { axiosinstant, PROJECTS_URL, } from "../../../../../utils/urls";
 import Table from "react-bootstrap/Table";
 import styles from "./projectList.module.css";
 import { toast } from "react-toastify";

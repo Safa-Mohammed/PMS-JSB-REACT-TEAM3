@@ -77,7 +77,7 @@ label{
   color: #EF9B28;
 }
  .form-control::placeholder {
-  color: white;
+  color: rgb(12, 12, 12);
   opacity: 1;  
 }
 /* Hide Edge/Chrome password reveal button */

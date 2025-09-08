@@ -37,7 +37,8 @@ export interface AuthContextType {
   userData: User | null;              
   isAuthenticated: boolean;           
   saveUserData: () => void;           
-  logout: () => void;                 
+  logout: () => void;  
+                 
 }
 
 export interface AuthContextProviderProps {
