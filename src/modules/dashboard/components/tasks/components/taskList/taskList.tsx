@@ -62,7 +62,7 @@ export default function TaskList() {
   let deleateTask= async()=>{
     try{
     let res=await  axiosinstant.delete(TASKS_URL.DELETE_TASK(DeleteId))
-    GetAllTasks(4,currentBage,filterValue)
+    GetAllTasks(8,currentBage,filterValue)
     toast("Task item deleted Successfully")
      handleClose()
       console.log(res);
@@ -264,7 +264,7 @@ export default function TaskList() {
 
           <li
               className={`page-item ${currentBage ===TotalNumOfBages.length ? "disabled" : ""}`}
-              onClick={() => currentBage <TotalNumOfBages.length && GetAllTasks(8, currentBage- 1,filterValue)}
+              onClick={() => currentBage <TotalNumOfBages.length && GetAllTasks(8, currentBage+1,filterValue)}
             >
           <span aria-hidden="true">&raquo;</span>
             </li>
