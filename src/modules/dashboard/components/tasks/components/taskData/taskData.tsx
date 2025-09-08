@@ -10,7 +10,7 @@ import { axiosinstant, EMPLOYEIES_URL, PROJECTS_URL, TASKS_URL } from "../../../
 export default function TaskData() {
 let {register,formState:{errors,isSubmitting},handleSubmit,reset}=useForm<TaskFormData>()
   let [AllProject,setAllProject]=useState<Project[]>([])
-    let [AllUser,setAllUser]=useState<any[]>([])
+    let [AllUser,setAllUser]=useState<Employee[]>([])
     let [AllTasks,setAllTasks]=useState <Task[]>([])
     let [AllTasksDetails,setAllTasksDetais]=useState<TaskDetailResponse>()
   let [isLoading, setIsLoading] = useState(true);
