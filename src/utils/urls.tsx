@@ -2,16 +2,32 @@ import axios from "axios";
 
 export const BASEURL = `https://upskilling-egypt.com:3003/api/v1/`;
 
-export const HEADERS = {
-  Authorization: localStorage.getItem("token"),
-  "Content-Type": "application/json",
-};
-
-//  axiosinstant
-export let axiosinstant = axios.create({
+// axios instance
+export const axiosinstant = axios.create({
   baseURL: BASEURL,
-  headers: HEADERS,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
+
+// Interceptor to add token dynamically
+axiosinstant.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+
+    // Ensure headers object exists
+    if (!config.headers) {
+      config.headers = {};
+    }
+
+    if (token) {
+      config.headers.Authorization = token;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 
 // EMPLOYEES URLS
 export const EMPLOYEIES_URL = {
@@ -19,10 +35,9 @@ export const EMPLOYEIES_URL = {
   VIRIFY: `Users/verify`,
   LOGIN: `Users/Login`,
   CHANGEPASSWORD: `Users/ChangePassword`,
-    GETALLUSERS:`Users/`,
-     BLOCKORUNBLOCKUSERS:`Users/`,
-    USERS_COUNT:`Users/count`
-
+  GETALLUSERS: `Users/`,
+  BLOCKORUNBLOCKUSERS: `Users/`,
+  USERS_COUNT: `Users/count`,
 };
 
 // PROJECTS URLS
@@ -33,14 +48,14 @@ export const PROJECTS_URL = {
   UPDATEPROJECT: `/Project/{id}`,
   VIEWPROJECT: `/Project/{id}`,
 };
-//TASKS URL
-export const TASKS_URL={
-    GET_ALLTASKS_MANEGER:`Task/manager`,
-    CREATE_TASK:`Task`,
-    GETALLPROJECTS:`Project/manager`,
-   UBDATE_TASK:(id:number)=>`Task/${id}`,
-   GETTASKBYID:(id:number)=>`Task/${id}`,
-  DELETE_TASK:(id:number)=>`Task/${id}`,
-  GETTASKSCOUNT:`Task/count`
 
-}
+// TASKS URLS
+export const TASKS_URL = {
+  GET_ALLTASKS_MANEGER: `Task/manager`,
+  CREATE_TASK: `Task`,
+  GETALLPROJECTS: `Project/manager`,
+  UBDATE_TASK: (id: number) => `Task/${id}`,
+  GETTASKBYID: (id: number) => `Task/${id}`,
+  DELETE_TASK: (id: number) => `Task/${id}`,
+  GETTASKSCOUNT: `Task/count`,
+};
