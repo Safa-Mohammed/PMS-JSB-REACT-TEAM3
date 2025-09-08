@@ -153,3 +153,18 @@ pageSize:number;
 totalNumberOfRecords: number;
 totalNumberOfPages:number
 }
+export interface EmployyRes{
+    pageNumber:number;
+pageSize:number;
+data:any
+}
+ export interface countRes{
+toDo:number,
+inProgress:number,
+done:number
+}
+
+ export interface UsrecountRes{
+activatedEmployeeCount:number,
+deactivatedEmployeeCount:number
+}

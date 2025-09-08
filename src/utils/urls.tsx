@@ -19,7 +19,8 @@ export const EMPLOYEIES_URL = {
   VIRIFY: `Users/verify`,
   LOGIN: `Users/Login`,
   CHANGEPASSWORD: `Users/ChangePassword`,
-    GETALLUSERS:`Users/Manager`
+    GETALLUSERS:`Users/`,
+    USERS_COUNT:`Users/count`
 
 };
 
@@ -38,6 +39,7 @@ export const TASKS_URL={
     GETALLPROJECTS:`Project/manager`,
    UBDATE_TASK:(id:number)=>`Task/${id}`,
    GETTASKBYID:(id:number)=>`Task/${id}`,
-  DELETE_TASK:(id:number)=>`Task/${id}`
+  DELETE_TASK:(id:number)=>`Task/${id}`,
+  GETTASKSCOUNT:`Task/count`
 
 }
