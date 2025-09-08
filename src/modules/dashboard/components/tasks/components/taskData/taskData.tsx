@@ -110,7 +110,7 @@ let getDatabyid=async()=>{
 //GET ALL PROJECT
 let GETALLPROJECTS= async()=>{
 try{
-let res= await axiosinstant.get<ProjectsResponse>(PROJECTS_URL.GETALLPROJECT)
+let res= await axiosinstant.get<ProjectsResponse>(PROJECTS_URL.GETALLPROJECTEEE)
 setAllProject(res?.data?.data)
 console.log(res.data);
 }
