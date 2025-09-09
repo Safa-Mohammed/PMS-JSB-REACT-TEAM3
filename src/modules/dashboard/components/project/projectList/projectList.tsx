@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../../../../../context/AuthContext";
 import { axiosinstant, PROJECTS_URL } from "../../../../../utils/urls";
 import Table from "react-bootstrap/Table";
 import styles from "./projectList.module.css";
@@ -9,12 +10,16 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import DeletePage from "../../../../shared/components/DeleteConfirmation/deleteConfrimation";
 import load from "../../../../../assets/images/loadpi.gif"; // Loading gif
-import type { Project, ProjectsResponse } from "../../../../../utils/interfaces";
+import type {
+  Project,
+  ProjectsResponse,
+} from "../../../../../utils/interfaces";
 
 export default function ProjectList() {
   const navigate = useNavigate();
   const createHref = useHref(`/dashboard/projects-data`);
-
+  let { userData } = useAuthContext();
+  console.log(userData);
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -24,16 +29,28 @@ export default function ProjectList() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 12;
 
-  const getAllProjects = async (pageNumber: number, pageSize: number, title: string) => {
+  const getAllProjects = async (
+    pageNumber: number,
+    pageSize: number,
+    title: string
+  ) => {
     try {
       setLoading(true);
-      const response = await axiosinstant.get<ProjectsResponse>(
-        PROJECTS_URL.GETALLPROJECT,
-        { params: { title, pageSize, pageNumber } }
-      );
+
+      // Choose endpoint based on role
+       const endpoint =
+      userData?.userGroup === "Manager" || userData?.userGroup === "superAdmin"
+        ? PROJECTS_URL.GETALLPROJECT_MANAGER
+        : PROJECTS_URL.GETALLPROJECT_EMPLOYEE;
+
+    const response = await axiosinstant.get<ProjectsResponse>(endpoint, {
+      params: { title, pageSize, pageNumber },
+    });
 
       setProjects(response.data.data || []);
-      const totalPages = Math.ceil(response.data.totalNumberOfRecords / pageSize) || 1;
+
+      const totalPages =
+        Math.ceil(response.data.totalNumberOfRecords / pageSize) || 1;
       setTotalNumOfPages(Array.from({ length: totalPages }, (_, i) => i + 1));
       setCurrentPage(pageNumber);
     } catch (error: any) {
@@ -59,7 +76,10 @@ export default function ProjectList() {
     try {
       setLoading(true);
       const res = await axiosinstant.delete<ProjectsResponse>(
-        PROJECTS_URL.DELETEPROJECT.replace("{id}", selectedProject.id.toString())
+        PROJECTS_URL.DELETEPROJECT.replace(
+          "{id}",
+          selectedProject.id.toString()
+        )
       );
       getAllProjects(currentPage, pageSize, nameValue);
       setShowDeleteModal(false);
@@ -76,9 +96,15 @@ export default function ProjectList() {
     <>
       <div className="d-flex justify-content-between bg-primary p-4 shadow-sm bg-transparent">
         <h4 className={styles.tittle}>Projects</h4>
-        <button className={styles.addButton} onClick={() => navigate(createHref)}>
-          Add New Project
-        </button>
+
+        {userData?.userGroup === "Manager" && (
+          <button
+            className={styles.addButton}
+            onClick={() => navigate(createHref)}
+          >
+            Add New Project
+          </button>
+        )}
       </div>
 
       <div className={`p-4 vh-100 w-100 ${styles.content}`}>
@@ -123,7 +149,9 @@ export default function ProjectList() {
                   <td>{project.title}</td>
                   <td>{project.description}</td>
                   <td>{new Date(project.creationDate).toLocaleDateString()}</td>
-                  <td>{new Date(project.modificationDate).toLocaleDateString()}</td>
+                  <td>
+                    {new Date(project.modificationDate).toLocaleDateString()}
+                  </td>
                   <td>
                     <div className={styles.actionDropdown}>
                       <button
@@ -135,33 +163,49 @@ export default function ProjectList() {
                       >
                         <i className="bi bi-three-dots"></i>
                       </button>
-                      <ul className={`dropdown-menu ${styles.dropdownMenu}`} aria-labelledby={`dropdownMenu-${project.id}`}>
+                      <ul
+                        className={`dropdown-menu ${styles.dropdownMenu}`}
+                        aria-labelledby={`dropdownMenu-${project.id}`}
+                      >
                         <li>
                           <button
                             className="dropdown-item"
-                            onClick={() => navigate(`/dashboard/projects-data/view/${project.id}`)}
+                            onClick={() =>
+                              navigate(
+                                `/dashboard/projects-data/view/${project.id}`
+                              )
+                            }
                           >
                             View
                           </button>
                         </li>
                         <li>
-                          <button
+                          {userData?.userGroup === "Manager" && (
+                           <button
                             className="dropdown-item"
-                            onClick={() => navigate(`/dashboard/projects-data/edit/${project.id}`)}
+                            onClick={() =>
+                              navigate(
+                                `/dashboard/projects-data/edit/${project.id}`
+                              )
+                            }
                           >
                             Edit
                           </button>
+                          )}
+                          
                         </li>
                         <li>
-                          <button
-                            className="dropdown-item text-danger"
-                            onClick={() => {
-                              setSelectedProject(project);
-                              setShowDeleteModal(true);
-                            }}
-                          >
-                            Delete
-                          </button>
+                          {userData?.userGroup === "Manager" && (
+                            <button
+                              className="dropdown-item text-danger"
+                              onClick={() => {
+                                setSelectedProject(project);
+                                setShowDeleteModal(true);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          )}
                         </li>
                       </ul>
                     </div>
@@ -175,12 +219,22 @@ export default function ProjectList() {
         <nav aria-label="Page navigation">
           <ul className="pagination justify-content-center">
             {/* Previous */}
-            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`} onClick={() => currentPage > 1 && getAllProjects(currentPage - 1, pageSize, nameValue)}>
+            <li
+              className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+              onClick={() =>
+                currentPage > 1 &&
+                getAllProjects(currentPage - 1, pageSize, nameValue)
+              }
+            >
               <span className="page-link">&laquo;</span>
             </li>
 
             {/* First page */}
-            <li className={`page-item ${currentPage === 1 ? "active" : ""}`} onClick={() => getAllProjects(1, pageSize, nameValue)} style={{ cursor: "pointer" }}>
+            <li
+              className={`page-item ${currentPage === 1 ? "active" : ""}`}
+              onClick={() => getAllProjects(1, pageSize, nameValue)}
+              style={{ cursor: "pointer" }}
+            >
               <span className="page-link">1</span>
             </li>
 
@@ -192,7 +246,13 @@ export default function ProjectList() {
             )}
 
             {/* Pages around current page */}
-            {TotalNumOfPages.filter(page => page !== 1 && page !== TotalNumOfPages.length && page >= currentPage && page <= currentPage + 2).map(page => (
+            {TotalNumOfPages.filter(
+              (page) =>
+                page !== 1 &&
+                page !== TotalNumOfPages.length &&
+                page >= currentPage &&
+                page <= currentPage + 2
+            ).map((page) => (
               <li
                 key={page}
                 className={`page-item ${currentPage === page ? "active" : ""}`}
@@ -212,13 +272,29 @@ export default function ProjectList() {
 
             {/* Last page */}
             {TotalNumOfPages.length > 1 && (
-              <li className={`page-item ${currentPage === TotalNumOfPages.length ? "active" : ""}`} onClick={() => getAllProjects(TotalNumOfPages.length, pageSize, nameValue)} style={{ cursor: "pointer" }}>
+              <li
+                className={`page-item ${
+                  currentPage === TotalNumOfPages.length ? "active" : ""
+                }`}
+                onClick={() =>
+                  getAllProjects(TotalNumOfPages.length, pageSize, nameValue)
+                }
+                style={{ cursor: "pointer" }}
+              >
                 <span className="page-link">{TotalNumOfPages.length}</span>
               </li>
             )}
 
             {/* Next */}
-            <li className={`page-item ${currentPage === TotalNumOfPages.length ? "disabled" : ""}`} onClick={() => currentPage < TotalNumOfPages.length && getAllProjects(currentPage + 1, pageSize, nameValue)}>
+            <li
+              className={`page-item ${
+                currentPage === TotalNumOfPages.length ? "disabled" : ""
+              }`}
+              onClick={() =>
+                currentPage < TotalNumOfPages.length &&
+                getAllProjects(currentPage + 1, pageSize, nameValue)
+              }
+            >
               <span className="page-link">&raquo;</span>
             </li>
           </ul>
@@ -226,7 +302,11 @@ export default function ProjectList() {
       </div>
 
       {/* Delete Modal */}
-      <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+      <Modal
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Confirm Delete</Modal.Title>
         </Modal.Header>

@@ -1,6 +1,7 @@
 import { useAuthContext } from "../../../../context/AuthContext";
 import navlogo from '../../../../assets/images/authlogo.svg';
 import pic from '../../../../assets/images/pic.png'
+
 export default function Header() {
   let { userData } = useAuthContext();
 

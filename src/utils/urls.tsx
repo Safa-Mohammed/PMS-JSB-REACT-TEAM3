@@ -42,7 +42,8 @@ export const EMPLOYEIES_URL = {
 
 // PROJECTS URLS
 export const PROJECTS_URL = {
-  GETALLPROJECT: `/Project`,
+  GETALLPROJECT_MANAGER: `/Project/manager`,
+  GETALLPROJECT_EMPLOYEE: `/Project/employee`,
   CREATEPROJECT: `/Project`,
   DELETEPROJECT: `/Project/{id}`,
   UPDATEPROJECT: `/Project/{id}`,

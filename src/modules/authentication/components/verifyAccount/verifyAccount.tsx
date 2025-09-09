@@ -51,7 +51,7 @@ export default function verifyAccount() {
           />
         </div>
 <div className="mt-4">
-          <label htmlFor="">E-mail</label>
+          <label htmlFor="">OTP Verification</label>
         </div>
         <div className="input-group rounded-3">
           <input
