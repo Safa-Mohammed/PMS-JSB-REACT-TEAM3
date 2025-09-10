@@ -43,6 +43,7 @@ export const EMPLOYEIES_URL = {
 // PROJECTS URLS
 export const PROJECTS_URL = {
   GETALLPROJECTEEE:'Project/manager',
+  GETALLPROJECTEEEEMPLOYEE:'Project/employee',
   GETALLPROJECT: `/Project`,
   CREATEPROJECT: `/Project`,
   DELETEPROJECT: `/Project/{id}`,

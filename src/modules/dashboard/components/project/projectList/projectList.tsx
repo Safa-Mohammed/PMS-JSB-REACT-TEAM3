@@ -41,7 +41,7 @@ export default function ProjectList() {
        const endpoint =
       userData?.userGroup === "Manager" || userData?.userGroup === "superAdmin"
         ? PROJECTS_URL.GETALLPROJECTEEE
-        : PROJECTS_URL.GETALLPROJECTEEE;
+        : PROJECTS_URL.GETALLPROJECTEEEEMPLOYEE;
 
     const response = await axiosinstant.get<ProjectsResponse>(endpoint, {
       params: { title, pageSize, pageNumber },
