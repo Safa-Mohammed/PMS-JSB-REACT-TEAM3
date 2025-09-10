@@ -4,7 +4,6 @@ import { useAuthContext } from "../../../../context/AuthContext";
 import { useState } from "react";
 import styles from './sidebar.module.css';
 
-
 type SidebarProps = {
   className?: string;
 };
@@ -14,7 +13,6 @@ export default function Sidebar({ className }: SidebarProps) {
   const location = useLocation();
   const { logout } = useAuthContext();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  let { userData } = useAuthContext();
 
   const handleLogout = () => {
     logout();
@@ -42,36 +40,30 @@ export default function Sidebar({ className }: SidebarProps) {
           >
             Home
           </MenuItem>
-{userData?.userGroup === 'Manager' && (
-  <MenuItem
-    icon={<i className="fa fa-users"></i>}
-    onClick={() => navigate("/dashboard/users-list")}
-    active={isActive("/dashboard/users-list")}
-  >
-    Users
-  </MenuItem>
-)}
 
-  <MenuItem
-    icon={<i className="fa fa-clipboard-list"></i>}
-    onClick={() => navigate("/dashboard/projects-list")}
-    active={isActive("/dashboard/projects-list")}
-  >
-    Projects
-  </MenuItem>
-  
-     {/* {(userData?.userGroup === 'Manager' || userData?.userGroup === 'Employee') && (
-  
-)} */}
- <MenuItem
+          <MenuItem
+            icon={<i className="fa fa-users"></i>}
+            onClick={() => navigate("/dashboard/users-list")}
+            active={isActive("/dashboard/users-list")}
+          >
+            Users
+          </MenuItem>
+
+          <MenuItem
+            icon={<i className="fa fa-clipboard-list"></i>}
+            onClick={() => navigate("/dashboard/projects-list")}
+            active={isActive("/dashboard/projects-list")}
+          >
+            Projects
+          </MenuItem>
+
+          <MenuItem
             icon={<i className="fa fa-tasks"></i>}
             onClick={() => navigate("/dashboard/tasks-list")}
             active={isActive("/dashboard/tasks-list")}
           >
             Tasks
           </MenuItem>
-
-         
 
           <MenuItem
             icon={<i className="fa fa-key"></i>}
