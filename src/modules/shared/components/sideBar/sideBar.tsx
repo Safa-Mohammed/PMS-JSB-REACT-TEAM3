@@ -13,6 +13,7 @@ export default function Sidebar({ className }: SidebarProps) {
   const location = useLocation();
   const { logout } = useAuthContext();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  let { userData } = useAuthContext();
 
   const handleLogout = () => {
     logout();
@@ -41,13 +42,14 @@ export default function Sidebar({ className }: SidebarProps) {
             Home
           </MenuItem>
 
-          <MenuItem
-            icon={<i className="fa fa-users"></i>}
-            onClick={() => navigate("/dashboard/users-list")}
-            active={isActive("/dashboard/users-list")}
-          >
-            Users
-          </MenuItem>
+          {userData?.userGroup === 'Manager' && (
+  <MenuItem
+    icon={<i className="fa fa-users"></i>}
+    onClick={() => navigate("/dashboard/users-list")}
+    active={isActive("/dashboard/users-list")}
+  >
+    Users
+  </MenuItem>)}
 
           <MenuItem
             icon={<i className="fa fa-clipboard-list"></i>}
