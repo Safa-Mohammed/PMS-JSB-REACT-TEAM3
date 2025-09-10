@@ -40,8 +40,8 @@ export default function ProjectList() {
       // Choose endpoint based on role
        const endpoint =
       userData?.userGroup === "Manager" || userData?.userGroup === "superAdmin"
-        ? PROJECTS_URL.GETALLPROJECT_MANAGER
-        : PROJECTS_URL.GETALLPROJECT_EMPLOYEE;
+        ? PROJECTS_URL.GETALLPROJECTEEE
+        : PROJECTS_URL.GETALLPROJECTEEE;
 
     const response = await axiosinstant.get<ProjectsResponse>(endpoint, {
       params: { title, pageSize, pageNumber },
