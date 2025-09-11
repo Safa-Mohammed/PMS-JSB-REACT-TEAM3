@@ -10,6 +10,8 @@ import '../../../../../../App.css'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import imgGril from "../../../../../../assets/images/Gril.png";
+import { useAuthContext } from "../../../../../../context/AuthContext";
+import TasksEmpolyee from "./tasksEmpolyee";
 
 export default function TaskList() {
   let [loading, setLoading] = useState(false);
@@ -19,8 +21,8 @@ export default function TaskList() {
   let [filterValue, setFiterValue] = useState<string>("");
   let[DeleteId,setID]=useState(0)
   let navigate = useNavigate();
-
-//modal
+  let { userData } = useAuthContext();
+ //modal
  const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -37,7 +39,14 @@ export default function TaskList() {
   ) => {
     try {
       setLoading(true);
-      let res = await axiosinstant.get<TaskResponse>(TASKS_URL.GET_ALLTASKS_MANEGER, {
+
+      //  
+      let url =
+        userData?.userGroup === "Manager"
+          ? TASKS_URL.GET_ALLTASKS_MANEGER
+          : TASKS_URL.GET_ASSIGNED_TASKS;
+
+      let res = await axiosinstant.get<TaskResponse>(url, {
         params: {
           title,
           pageSize,
@@ -89,7 +98,9 @@ export default function TaskList() {
 
   return (
     <>
-<div className="title mt-4 d-flex justify-content-between align-items-center px-2">
+    {userData?.userGroup === "Manager" ? (
+      <>
+          <div className="title mt-4 d-flex justify-content-between align-items-center px-2">
         <h2>Tasks</h2>
         <button
           className="btn rounded-5 text-light py-2 px-2 me-2"
@@ -296,8 +307,18 @@ export default function TaskList() {
           </Button>
         </Modal.Footer>
       </Modal>
+      </div></>
+    ) : userData?.userGroup === "Employee" ? (
+      // 👇employeeeee
+      <div>
+       <TasksEmpolyee/>
       </div>
+    ) 
+: (
+      // other role
+      <div>Unauthorized</div>
 
-    </>
+   ) }
+  </>
   )
 }

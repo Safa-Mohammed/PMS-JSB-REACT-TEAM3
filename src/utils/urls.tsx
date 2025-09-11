@@ -21,7 +21,7 @@ axiosinstant.interceptors.request.use(
     }
 
     if (token) {
-      config.headers.Authorization = token;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -60,4 +60,7 @@ export const TASKS_URL = {
   GETTASKBYID: (id: number) => `Task/${id}`,
   DELETE_TASK: (id: number) => `Task/${id}`,
   GETTASKSCOUNT: `Task/count`,
+  GET_ASSIGNED_TASKS:'Task',
+CHANGETASKS:(id:string)=>`Task/${id}/change-status`
+
 };
