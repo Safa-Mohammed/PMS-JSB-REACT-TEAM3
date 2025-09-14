@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
-import type { TaskFormData,Project,Employee,Task,EmployyRes} from '../../../../../../utils/interfaces'
-import type { TaskResponse,TaskDetailResponse,ProjectsResponse,UserResponse} from '../../../../../../utils/interfaces'
+import type { TaskFormData,Project,EmployyRes} from '../../../../../../utils/interfaces'
+import type { TaskResponse,TaskDetailResponse,ProjectsResponse} from '../../../../../../utils/interfaces'
 import loading from '../../../../../../assets/images/loadpi.gif'
 
 import { useEffect, useState } from "react"
@@ -11,8 +11,6 @@ export default function TaskData() {
 let {register,formState:{errors,isSubmitting},handleSubmit,reset}=useForm<TaskFormData>()
   let [AllProject,setAllProject]=useState<Project[]>([])
     let [AllUser,setAllUser]=useState<any[]>([])
-    let [AllTasks,setAllTasks]=useState <Task[]>([])
-    let [AllTasksDetails,setAllTasksDetais]=useState<TaskDetailResponse>()
   let [isLoading, setIsLoading] = useState(true);
     let navigate=useNavigate()
   const params=useParams()
@@ -35,7 +33,6 @@ else{
   let GetAllTasks= async()=>{
     try{
    let res= await axiosinstant.get<TaskResponse>(TASKS_URL.GET_ALLTASKS_MANEGER)
-   setAllTasks(res.data.data)
    console.log(res.data.data);
     }
       catch(error:any){
@@ -91,7 +88,6 @@ let getDatabyid=async()=>{
   try{
     let res= await axiosinstant.get<TaskDetailResponse>(TASKS_URL.GETTASKBYID(Number(params.id)))
     console.log(res.data);
-    setAllTasksDetais(res.data)
     reset({
       title:res?.data?.title,
       description:res?.data?.description,

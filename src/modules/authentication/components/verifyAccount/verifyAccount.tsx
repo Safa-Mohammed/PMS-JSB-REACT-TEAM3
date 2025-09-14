@@ -17,7 +17,7 @@ export default function verifyAccount() {
   let navigate = useNavigate();
   let onSubmit = async (verifyaccount: VirifyData) => {
     try {
-      let res = await axiosinstant.put(EMPLOYEIES_URL.VIRIFY, verifyaccount);
+      let res = await axiosinstant.put<any>(EMPLOYEIES_URL.VIRIFY, verifyaccount);
       console.log(res);
       toast.success(res.data.message);
       navigate("/login");

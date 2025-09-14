@@ -59,7 +59,7 @@ export default function Register() {
     let employeeData = appendFormData(data);
 
     try {
-      let res = await axiosinstant.post(EMPLOYEIES_URL.REGISTER, employeeData);
+      let res = await axiosinstant.post<any>(EMPLOYEIES_URL.REGISTER, employeeData);
       navigate("/verify-account", { state: data.email });
       toast.success(res.data.message);
       console.log(res);
@@ -71,7 +71,7 @@ export default function Register() {
 
   
   useEffect(() => {
-    const password = watch("password");
+    watch("password");
     if (watch("confirmPassword")) trigger("confirmPassword");
   }, ['password']);
 

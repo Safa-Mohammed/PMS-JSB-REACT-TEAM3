@@ -13,7 +13,6 @@ export default function login() {
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<LoginData>();
-  let [tokken, setTokken] = useState(null);
 
   let [show, setShow] = useState(true);
   let navigate = useNavigate();
@@ -23,10 +22,9 @@ export default function login() {
   };
   let onSubmit = async (Login: LoginData) => {
     try {
-      let res = await axiosinstant.post(EMPLOYEIES_URL.LOGIN, Login);
+      let res = await axiosinstant.post<any>(EMPLOYEIES_URL.LOGIN, Login);
        toast.success("Login successful!");
       navigate("/dashboard");
-      setTokken(res.data.token);
       localStorage.setItem("token", res.data.token);
       saveUserData();
      
