@@ -25,7 +25,7 @@ import ProjectView from "./modules/dashboard/components/project/projectView/proj
 import ProjectList from "./modules/dashboard/components/project/projectList/projectList";
 import TaskData from "./modules/dashboard/components/tasks/components/taskData/taskData";
 import TaskList from "./modules/dashboard/components/tasks/components/taskList/taskList";
-import Register from "./modules/authentication/components/register/register";
+import Register from "./modules/authentication/components/Register/register";
 import ProtectedRoute from "./modules/shared/components/protectedRoute/protectedRoute";
 
 function App() {

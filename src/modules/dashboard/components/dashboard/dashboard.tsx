@@ -37,9 +37,7 @@ export default function Dashboard() {
           <TaskCountChart/>
         </div>
 
-
-
-<div className=" col-md-6 ">
+{userData?.userGroup==='Manager'&&<div className=" col-md-6 ">
         <div className="d-inline-block ps-3 mb-4">
   <div style={{ borderLeft: "4px solid orange", paddingLeft: "10px" }}>
     <h4 className="fw-bold mb-1">Users</h4>
@@ -48,6 +46,8 @@ export default function Dashboard() {
           </div>
           <UserActiveChart/>
         </div>
+}
+
 
         
         </div>

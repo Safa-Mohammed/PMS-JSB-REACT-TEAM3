@@ -1,6 +1,8 @@
 /* Use :global() to style react-pro-sidebar classes because CSS modules 
 scope class names locally; without it, hover/active styles on the library’s sidebar won’t work.
  */
+
+ 
 .sidebarContainer {
   height: 130vh !important;
 }
