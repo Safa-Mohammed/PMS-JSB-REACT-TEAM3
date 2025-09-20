@@ -1,0 +1,129 @@
+.auth-layout{
+    background-image: url('./assets/images/auth.svg');
+    height: 106vh;
+    background-color: rgba(14, 56, 47, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   background-size: cover;  
+  background-repeat: no-repeat;
+  background-position: center;
+    
+}
+/* .frame{
+    width: 60%;
+    background-color: rgba(49, 74, 89, 0.9);
+   
+} */
+ .form-control {
+  color: #000 !important;    
+}
+
+
+/* remove border from input and button */
+.form-control,
+.btn-light {
+  border: none ;
+  border-radius: 0;
+  background: transparent ;
+  box-shadow: none ;
+  border-bottom: #EF9B28;
+}
+
+/* apply one border-bottom to the whole group */
+.input-group {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  border-radius: 0 !important;
+}
+
+/* on focus inside group */
+.input-group:focus-within {
+  border-bottom: 2px solid rgba(239, 155, 40, 1);
+}
+ /* input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #050303 !important;
+} */
+
+.title small {
+  color: #ffffff;
+  margin: 2px 0;
+  display: block; /* makes sure it's above the heading */
+}
+
+/* Styled heading with underline */
+.heading-underline {
+  font-weight: 700;
+  font-size: 32px;
+  color: #EF9B28;
+  display: inline-block;
+  position: relative;
+}
+
+.heading-underline::after {
+  content: "";
+  position: absolute;
+  left: 2%; 
+  bottom: -4px; /* space below text */
+  width: 10px;  /* fixed width for underline */
+  height: 4px; /* thickness of underline */
+  background-color: #EF9B28;
+}
+
+label{
+  color: #EF9B28;
+}
+ .form-control::placeholder {
+  color: white;
+  opacity: 1;  
+}
+/* Hide Edge/Chrome password reveal button */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-clear-button {
+  display: none;
+}
+
+ /* .sidebar-container .ps-sidebar-container{
+  background-color: #0E382F !important;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  height: 100vh;
+ }
+.sidebar-container .ps-menu-button:hover  {
+  background-color: #EF9B284D !important;
+  width: 90%;
+  margin: auto;
+  border-radius: 20px;
+ }
+.sidebar-container .ps-menu-button.ps-active {
+  background-color: #d08010e1 !important;  
+  color: #fff !important;
+  font-weight: 700;
+  width: 90%;
+  margin: auto;
+  border-radius: 20px;
+}
+.icon-sidebar {
+  background: #EF9B28;
+  border-radius: 10px 0px 0px 10px; 
+  padding: 6px;  
+  display: inline-flex; 
+  align-items: center;
+  justify-content: center;
+} */
+.dropdown-item:hover{
+background-color: rgba(0, 38, 255,0.3) !important;
+}
+.active{
+  background-color: rgb(101, 101, 243) ;
+  color: antiquewhite;
+}
