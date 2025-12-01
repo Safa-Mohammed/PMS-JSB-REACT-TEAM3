@@ -1,0 +1,47 @@
+form-label{
+    color: aquamarine !important;
+}
+.section{
+background-color: #f5f5f5;
+}
+.title{
+    cursor: pointer;
+    color: #0E382F;
+    font-size: 14px;
+}
+.text{
+    color: black;   margin-bottom: 10px;
+
+}
+.textarea {
+  background: #ffffff;
+  border: rgba(128, 128, 128, 0.493) 0.5px solid; /* subtle gray border */
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+ 
+.input{
+  background: #ffffff;
+  border: rgba(128, 128, 128, 0.493) 0.5px solid; /* subtle gray border */
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+ .buttonSave{
+    background-color: #EF9B28;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+ }
+ .buttonCancel{
+        background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    border-radius: 20px;
+ }

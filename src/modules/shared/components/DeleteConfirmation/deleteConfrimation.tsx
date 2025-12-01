@@ -1,6 +1,18 @@
+import imgGril from "../../../../assets/images/Gril.png";
 
-export default function deleteConfrimation() {
+interface DeleteConfirmationProps {
+  deleteItem: string;
+}
+
+export default function DeleteConfrimation({ deleteItem }: DeleteConfirmationProps) {
   return (
-    <div>deleteConfrimation</div>
-  )
+    <div className="text-center">
+      <img src={imgGril} className="w-50 mb-3" alt="Delete Illustration" />
+      <h4 className="mb-3">Delete This {deleteItem}?</h4>
+      <p className="mb-4">
+        Are you sure you want to delete this item? If you are sure just click
+        on delete it.
+      </p>
+    </div>
+  );
 }
